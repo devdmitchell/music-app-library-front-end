@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import { toast } from "react-toastify"
 
 function Login() {
   const [credentials, setCredentials] = useState({ username: "", password: "" })   
@@ -13,6 +14,7 @@ function Login() {
     try {
       const response = await axios.post("http://localhost:3000/login", credentials)    // POST request to the backend login
       localStorage.setItem("token", response.data.token)      //stores auth token that was received in local storage
+      toast.success('User Logged In.')
       navigate("/dashboard")            //takes user to dashboard after logging in successfully
     } catch (error) {
       setError("Invalid username or password")

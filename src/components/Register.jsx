@@ -10,7 +10,7 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault()
     try {
-      await axios.post("http://localhost:5000/register", credentials)
+      await axios.post("http://localhost:3000/register", credentials)
       navigate("/")
     } catch (err) {
       setError("Error registering user")
