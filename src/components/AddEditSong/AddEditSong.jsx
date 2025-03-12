@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import "./AddEditSong.css"
 
 function AddEditSong() {
   const [song, setSong] = useState({ title: "", artist: "" })
@@ -16,7 +17,7 @@ function AddEditSong() {
     await axios[method](url, song, {
       headers: { Authorization: localStorage.getItem("token") },        //sends the stored token for auth
     })
-    navigate("/dashboard")
+    navigate("./Dashboard/Dashboard")
 }
 
   return (
