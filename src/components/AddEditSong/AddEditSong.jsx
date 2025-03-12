@@ -2,6 +2,8 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import "./AddEditSong.css"
+import { toast } from "react-toastify"
+
 
 function AddEditSong() {
   const [song, setSong] = useState({ title: "", artist: "" })
@@ -9,15 +11,21 @@ function AddEditSong() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const method = song._id ? "put" : "post"  // see if song already has an ID
-    const url = song._id
-      ? `http://localhost:3000/songs/${song._id}`         // for existing song (PUT request)
-      : "http://localhost:3000/songs"                     // for new song (POST request)
+try {
+  const method = song._id ? "put" : "post"  // see if song already has an ID
+  const url = song._id
+    ? `http://localhost:3000/songs/${song._id}`         // for existing song (PUT request)
+    : "http://localhost:3000/songs"                     // for new song (POST request)
   
-    await axios[method](url, song, {
-      headers: { Authorization: localStorage.getItem("token") },        //sends the stored token for auth
-    })
-    navigate("./Dashboard/Dashboard")
+  await axios[method](url, song, {
+    headers: { Authorization: localStorage.getItem("token") },        //sends the stored token for auth
+  })
+  toast.success('Song saved successfully.')
+  navigate("./Dashboard")
+} catch (error) {
+  console.error(error)
+  toast.error("There was an error saving the song.")
+}
 }
 
   return (
