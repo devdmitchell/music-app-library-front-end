@@ -11,7 +11,7 @@ function AddEditSong() {
     e.preventDefault()
     const method = song._id ? "put" : "post"  // see if song already has an ID
     const url = song._id
-      ? `http://localhost:5000/songs/${song._id}`         // for existing song (PUT request)
+      ? `http://localhost:3000/songs/${song._id}`         // for existing song (PUT request)
       : "http://localhost:3000/songs"                     // for new song (POST request)
   
     await axios[method](url, song, {
