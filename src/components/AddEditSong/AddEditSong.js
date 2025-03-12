@@ -2,18 +2,22 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
-
 function AddEditSong() {
   const [song, setSong] = useState({ title: "", artist: "" })
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await axios.post("http://localhost:3000/songs", song, {
-      headers: { Authorization: localStorage.getItem("token") },
+    const method = song._id ? "put" : "post"  // see if song already has an ID
+    const url = song._id
+      ? `http://localhost:5000/songs/${song._id}`         // for existing song (PUT request)
+      : "http://localhost:3000/songs"                     // for new song (POST request)
+  
+    await axios[method](url, song, {
+      headers: { Authorization: localStorage.getItem("token") },        //sends the stored token for auth
     })
     navigate("/dashboard")
-  }
+}
 
   return (
     <div className="song-container">

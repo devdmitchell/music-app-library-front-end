@@ -12,8 +12,8 @@ function Register() {
     try {
       await axios.post("http://localhost:3000/register", credentials)
       navigate("/")
-    } catch (err) {
-      setError("Error registering user")
+    } catch (error) {
+      setError(error.message)
     }
   }
 

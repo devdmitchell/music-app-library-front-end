@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { toast } from "react-toastify"
 
+
 function Login() {
   const [credentials, setCredentials] = useState({ username: "", password: "" })   
   const [error, setError] = useState("")
@@ -17,7 +18,7 @@ function Login() {
       toast.success('User Logged In.')
       navigate("/dashboard")            //takes user to dashboard after logging in successfully
     } catch (error) {
-      setError("Invalid username or password")
+      setError(error.message)
     }
   }
 
@@ -42,7 +43,7 @@ function Login() {
           <button className="login-button">Login</button>
         </form>
         <p className="register-link">
-          Don't have an account? <a href="/register">Register</a>
+          Don &apos t have an account? <a href="/register">Register</a>
         </p>
       </div>
     </div>
