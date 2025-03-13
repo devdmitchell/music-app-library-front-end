@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Login from "./src/components/Login/Login"
-import Register from './src/components/Register/Register'
-import Dashboard from "./src/components/Dashboard/Dashboard"
-import AddEditSong from './src/components/AddEditSong/AddEditSong'
-
+import Login from "./components/Login/Login"
+import AddEditSong from "./components/AddEditSong/AddEditSong"
+import Dashboard from "./components/Dashboard/Dashboard"
+import Register from './components/Register/Register'
 
 
 function App() {
