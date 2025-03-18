@@ -1,14 +1,9 @@
-import Axios from './Axios'
+import axios from "axios"
 
-const setAxiosAuthToken = (jwt)=>{
-    // check if jwt is truthy
-    if(jwt){
-        // attach headers
-        Axios.defaults.headers.common.Authorization = `Bearer ${jwt}`
-    }else{
-        //if not, delete header
-        delete Axios.defaults.headers.common.Authorization
-    }
-}
+// Axios Instance
+const Axios = axios.create({
+  baseURL: "http://localhost:3000/api",  
+  timeout: 50000,   // If server hangs for more than 50 seconds
+})
 
-export default setAxiosAuthToken
+export default Axios
