@@ -72,7 +72,7 @@ function Register() {
         toast.error(error.response?.data?.error || "Registration Failed", {
           position: "top-center",
           autoClose: 2000,
-        });
+        })
       }
     }
   }

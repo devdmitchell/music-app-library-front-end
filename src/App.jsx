@@ -1,4 +1,4 @@
-import SignUp from "./components/SignUp/SignUp";
+import Register from "./components/Register/Register";
 import './App.css'
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
