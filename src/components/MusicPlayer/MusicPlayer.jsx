@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import SongList from './SongList'
-import './Music.css'
+import "./MusicPlayer.css" 
 
 function Music() {
   const [textInput, setTextInput] = useState('')

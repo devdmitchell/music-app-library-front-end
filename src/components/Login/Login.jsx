@@ -39,6 +39,7 @@ function Login() {
             type="password"
             placeholder="Password"
             className="input-field"
+            autoComplete="off"
             onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
           />
           <button className="login-button">Login</button>
