@@ -11,8 +11,8 @@ function App() {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    const jwt = window.localStorage.getItem('jwt');           //checks for jwt
-    const currentUser = jwt ? jwtDecode(jwt) : null;          // sets user info if jwt exists
+    const jwt = window.localStorage.getItem('token')          //checks for jwt
+    const currentUser = jwt ? jwtDecode(jwt) : null          // sets user info if jwt exists
     if (currentUser && currentUser.exp > (Date.now() / 1000)) {
       setUser({
         username: currentUser.username,
@@ -21,7 +21,7 @@ function App() {
       })
       setAxiosAuthToken(jwt)
     } else {
-      window.localStorage.removeItem('jwt')    //if expired, remove jwt
+      window.localStorage.removeItem('token')    //if expired, remove jwt
     }
   }, [])
 
@@ -31,7 +31,7 @@ function App() {
 
   const handleUserLogout = () => {
     setUser(null)
-    window.localStorage.removeItem('jwt')
+    window.localStorage.removeItem('token')
     setAxiosAuthToken(null)
   }
 

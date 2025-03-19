@@ -5,7 +5,7 @@ import setAxiosAuthToken from './setAxiosAuthToken'
 
 export const checkIfUserIsAuth = () =>{
     // check if JWT exist
-    const jwt = window.localStorage.getItem('jwt')
+    const jwt = window.localStorage.getItem('token')
     if(jwt){
         // check not expired
         const currentTime = Date.now() / 1000

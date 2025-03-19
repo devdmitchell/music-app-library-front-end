@@ -117,6 +117,7 @@ function Register() {
                 type="password"
                 id="password"
                 placeholder="Password"
+                autoComplete="off"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -130,6 +131,7 @@ function Register() {
                 type="password"
                 id="confirmPassword"
                 placeholder="Confirm Password"
+                 autoComplete="off"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />

@@ -17,7 +17,7 @@ function Login() {
       const response = await axios.post("http://localhost:3000/login", credentials)    // POST request to the backend login
       localStorage.setItem("token", response.data.token)      //stores auth token that was received in local storage
       toast.success('User Logged In.')
-      navigate("./Dashboard/Dashboard")            //takes user to dashboard after logging in successfully
+      navigate("/dashboard")            //takes user to dashboard after logging in successfully
     } catch (error) {
       setError(error.message)
     }

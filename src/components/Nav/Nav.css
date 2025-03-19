@@ -2,9 +2,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #1e1e2f; 
+    background-color: var(--text-color);
     padding: 1rem 2rem;
-    color: #fff;
+    color: var(--card-bg);
     width: 90%;
   }
   
@@ -14,13 +14,11 @@
   }
   
   .h1-logo a {
-    text-decoration: none;
-    color: #fff;
-    transition: color 0.3s;
+    color: var(--card-bg);
   }
   
   .h1-logo a:hover {
-    color: #ff6bcb; 
+    color: var(--accent-color);
   }
   
   .right-side-nav ul {
@@ -36,24 +34,14 @@
   }
   
   .right-side-nav a {
-    text-decoration: none;
-    color: #fff;
     padding: 0.5rem 1rem;
     border-radius: 20px;
-    background-color: #2a2a3c;
+    background-color: var(--background-color);
+    color: var(--text-color);
     transition: background-color 0.3s;
   }
   
   .right-side-nav a:hover {
-    background-color: #ff6bcb;
-    color: #1e1e2f;
-  }
-  
- 
-  .right-side-nav a[onClick] {
-    background-color: #ff4757; 
-  }
-  
-  .right-side-nav a[onClick]:hover {
-    background-color: #ff6b6b;
+    background-color: var(--accent-color);
+    color: var(--text-color);
   }
