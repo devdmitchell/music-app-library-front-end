@@ -1,8 +1,6 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import Home from './components/Home/Home'
-import SignUp from './components/SignUp/SignUp'
 import Nav from './components/Nav/Nav'
-import MusicPlayer from './components/MusicPlayer/MusicPlayer'
 import LogIn from './components/Login/Login'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import Profile from './components/Profile/Profile'
