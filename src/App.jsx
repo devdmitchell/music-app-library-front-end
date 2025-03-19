@@ -36,14 +36,14 @@ function App() {
   }
 
   return (
-    <>
-      <ToastContainer position="top-center" />    {/*banner for container, feedback for user*/}
+    <div style={{width: "100vw"}}>
+      <ToastContainer position="top-center" />
       <MainRouter 
         user={user} 
         handleUserLogout={handleUserLogout}
         handleUserLogin={handleUserLogin}
       />
-    </>
+    </div>
   )
 }
 
