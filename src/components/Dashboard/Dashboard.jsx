@@ -8,7 +8,7 @@ function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("")
   const navigate = useNavigate()
 
-  // Function to fetch songs 
+
   const fetchSongs = async (query = "") => {
     try {
       const token = localStorage.getItem("token")
@@ -25,21 +25,32 @@ function Dashboard() {
     }
   }
 
-  // Fetch all songs on component mount
   useEffect(() => {
     fetchSongs()
   }, [])
 
-  // Handle search form submission
   const handleSearch = (e) => {
     e.preventDefault()
     fetchSongs(searchTerm)
   }
 
+
+  const handleDelete = async (id) => {
+    try {
+      const token = localStorage.getItem("token")
+      await axios.delete(`http://localhost:3000/api/songs/delete-song-by-id/${id}`, {
+        headers: { Authorization: "Bearer " + token },
+      })
+      setSongs(songs.filter(song => song._id !== id))
+    } catch (error) {
+      console.error("Error deleting song:", error)
+    }
+  }
+
   return (
     <div className="dashboard-container">
       <h1 className="dashboard-header">Your Songs</h1>
-      {/* Search bar */}
+      
       <form onSubmit={handleSearch} className="search-form">
         <input
           type="text"
@@ -50,6 +61,7 @@ function Dashboard() {
         />
         <button type="submit" className="search-button">Search</button>
       </form>
+      
       <button
         className="add-song-button"
         onClick={() => navigate("/song")}
@@ -63,6 +75,18 @@ function Dashboard() {
           {songs.map((song) => (
             <li key={song._id} className="song-item">
               <span>{song.title} - {song.artist}</span>
+              <button
+                className="edit-button"
+                onClick={() => navigate(`/song/${song._id}`)}
+              >
+                Edit
+              </button>
+              <button
+                className="delete-button"
+                onClick={() => handleDelete(song._id)}
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>
