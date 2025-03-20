@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard/Dashboard'
 import Register from './components/Register/Register'
 import Home from './components/Home/Home'
 import MusicPlayer from './components/MusicPlayer/MusicPlayer'
+import SongsPage from './Pages/SongsPage'
 
 
 // Main Router for the Music App
@@ -36,6 +37,7 @@ function MainRouter({ user, handleUserLogin, handleUserLogout }) {
         <Route path='/register' element={<Register />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/song/:id?' element={<AddEditSong />} />
+        <Route path='/songs' element={<SongsPage />} />
       </Routes>
     </Router>
   )
