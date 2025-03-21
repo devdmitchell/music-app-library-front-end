@@ -1,21 +1,35 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+
 import axios from "axios"
 import "./AddEditSong.css"
 import { toast } from "react-toastify"
 
 function AddEditSong() {
   const [song, setSong] = useState({ title: "", artist: "" })
+  const { id } = useParams()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchSong = async () => {
+      if (id) {
+        const token = localStorage.getItem("token")
+        const response = await axios.get(`http://localhost:3000/api/songs/${id}`, {
+          headers: { Authorization: "Bearer " + token },
+        })
+        setSong(response.data)
+      }
+    }
+    fetchSong()
+  }, [id])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const method = song._id ? "put" : "post"
-      const url = song._id 
-        ? `http://localhost:3000/api/songs/update-song-by-id/${song._id}`
+      const method = id ? "put" : "post"
+      const url = id
+        ? `http://localhost:3000/api/songs/update-song-by-id/${id}`
         : "http://localhost:3000/api/songs/add-song"
-
 
       const token = localStorage.getItem("token")
       await axios[method](url, song, {
@@ -28,7 +42,6 @@ function AddEditSong() {
       toast.error("There was an error saving the song.")
     }
   }
-
   return (
     <div className="song-container">
       <div className="song-form-box">

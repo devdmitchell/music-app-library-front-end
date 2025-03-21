@@ -10,6 +10,7 @@ function MusicPlayer() {
   const handleOnSearch = async (e) => {
     e.preventDefault()
     try {
+      console.log('Hello')
       const query = textInput.trim()
       const response = await axios.get(`http://localhost:3000/api/search?query=${encodeURIComponent(query)}`)
       setSongList(response.data)
