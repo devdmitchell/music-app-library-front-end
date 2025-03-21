@@ -1,12 +1,19 @@
-const API_URL = 'http://localhost:5000/api/songs/get-all-songs'
+const API_URL = 'http://localhost:3000/api/songs/get-all-songs'
+
 
 export const fetchSongs = async () => {
   try {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      console.error('No token found! User may not be logged in')
+      return []
+    }
+
     const response = await fetch(API_URL, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${token}`  
       }
     })
 

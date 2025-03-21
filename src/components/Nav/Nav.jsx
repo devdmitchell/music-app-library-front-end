@@ -11,22 +11,23 @@ function Nav({ user, handleUserLogout }) {
       </div>
       <div className="right-side-nav">
         <ul>
-          {user ? (
-            <>
-              <li>
-                <NavLink to="/profile">Update Profile</NavLink>
-              </li>
-              <li>
-                <NavLink to="/" onClick={handleUserLogout}>Log Out</NavLink>
-              </li>
-            </>
-          ) : (
+          {!user && (
             <>
               <li>
                 <NavLink to="/register">Register</NavLink>
               </li>
               <li>
                 <NavLink to="/login">Sign In</NavLink>
+              </li>
+            </>
+          )}
+          {user && (
+            <>
+              <li>
+                <NavLink to="/profile">Update Profile</NavLink>
+              </li>
+              <li>
+                <NavLink to="/" onClick={handleUserLogout}>Log Out</NavLink>
               </li>
             </>
           )}

@@ -14,7 +14,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post("http://localhost:3000/login", credentials)    // POST request to the backend login
+      const response = await axios.post("http://localhost:3000/api/auth/login", credentials)    // POST request to the backend login
       localStorage.setItem("token", response.data.token)      //stores auth token that was received in local storage
       toast.success('User Logged In.')
       navigate("/dashboard")            //takes user to dashboard after logging in successfully

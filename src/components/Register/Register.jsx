@@ -46,7 +46,7 @@ function Register() {
       passwordConfirmError.length === 0
     ) {
       try {
-        const response = await axios.post("/register", {
+        const response = await axios.post("/auth/register", {
           username,
           email,
           password,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { fetchSongs } from '../api/songsApi'
+import { fetchSongs } from '../../api/SongsApi'
 
 const SongList = () => {
   const [songs, setSongs] = useState([])

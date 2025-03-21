@@ -1,27 +1,38 @@
-import Register from "./components/Register/Register";
-import './App.css'
+import React, { useEffect, useState } from "react"
 import { ToastContainer } from "react-toastify"
-import 'react-toastify/dist/ReactToastify.css'
+import "react-toastify/dist/ReactToastify.css"
 import MainRouter from "./MainRouter"
-import { useEffect, useState } from "react"
 import { jwtDecode } from "jwt-decode"
 import setAxiosAuthToken from "./utils/setAxiosAuthToken"
+import "./App.css"
 
 function App() {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    const jwt = window.localStorage.getItem('token')          //checks for jwt
-    const currentUser = jwt ? jwtDecode(jwt) : null          // sets user info if jwt exists
-    if (currentUser && currentUser.exp > (Date.now() / 1000)) {
-      setUser({
-        username: currentUser.username,
-        email: currentUser.email,
-        id: currentUser.id
-      })
-      setAxiosAuthToken(jwt)
-    } else {
-      window.localStorage.removeItem('token')    //if expired, remove jwt
+    // Get the token from localStorage
+    const token = window.localStorage.getItem("token")
+    if (token) {
+      try {
+        // Decode the token to get user information
+        const decoded = jwtDecode(token)
+        // Check if the token is still valid (not expired)
+        if (decoded.exp > Date.now() / 1000) {
+          setUser({
+            username: decoded.username,
+            email: decoded.email,
+            id: decoded.id,
+          })
+          // Set the token in Axios with the "Bearer" prefix
+          setAxiosAuthToken("Bearer " + token)
+        } else {
+          // Token is expired; remove it
+          window.localStorage.removeItem("token")
+        }
+      } catch (error) {
+        // If decoding fails, remove the token
+        window.localStorage.removeItem("token")
+      }
     }
   }, [])
 
@@ -31,17 +42,17 @@ function App() {
 
   const handleUserLogout = () => {
     setUser(null)
-    window.localStorage.removeItem('token')
+    window.localStorage.removeItem("token")
     setAxiosAuthToken(null)
   }
 
   return (
-    <div style={{width: "100vw"}}>
+    <div style={{ width: "100vw" }}>
       <ToastContainer position="top-center" />
-      <MainRouter 
-        user={user} 
-        handleUserLogout={handleUserLogout}
+      <MainRouter
+        user={user}
         handleUserLogin={handleUserLogin}
+        handleUserLogout={handleUserLogout}
       />
     </div>
   )

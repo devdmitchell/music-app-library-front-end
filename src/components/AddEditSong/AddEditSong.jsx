@@ -16,7 +16,7 @@ function AddEditSong() {
         ? `http://localhost:3000/api/songs/update-song-by-id/${song._id}`
         : "http://localhost:3000/api/songs/add-song"
 
-      // Prepend "Bearer " to the token so that the auth middleware can extract it correctly
+
       const token = localStorage.getItem("token")
       await axios[method](url, song, {
         headers: { Authorization: "Bearer " + token },

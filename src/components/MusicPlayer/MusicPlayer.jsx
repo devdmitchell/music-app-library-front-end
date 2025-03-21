@@ -10,13 +10,10 @@ function MusicPlayer() {
   const handleOnSearch = async (e) => {
     e.preventDefault()
     try {
-      const query = textInput // preserve the query for searching
-      const token = localStorage.getItem("token")
-      const response = await axios.get(`http://localhost:3000/api/songs/get-all-songs?search=${query}`, {
-        headers: { Authorization: "Bearer " + token },
-      })
+      const query = textInput.trim()
+      const response = await axios.get(`http://localhost:3000/api/search?query=${encodeURIComponent(query)}`)
       setSongList(response.data)
-     setTextInput('')  //clear input after search:
+      setTextInput('')
     } catch (error) {
       console.error("Error searching for songs:", error)
     }
@@ -28,7 +25,6 @@ function MusicPlayer() {
         <input
           type="text"
           placeholder="Search for a song..."
-          name="song"
           value={textInput}
           onChange={(e) => setTextInput(e.target.value)}
         />
