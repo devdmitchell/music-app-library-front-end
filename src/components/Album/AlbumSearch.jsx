@@ -8,7 +8,6 @@ const AlbumSearch = () => {
   const handleSearch = async () => {
     if (albumName.trim() === '') return
     const results = await searchAlbum(albumName)
-    
     setAlbums(results)
   }
 

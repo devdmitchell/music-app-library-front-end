@@ -1,32 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { fetchSongs } from '../../api/SongsApi'
+import React from 'react'
 
-const SongList = () => {
-  const [songs, setSongs] = useState([])
-
-  useEffect(() => {
-    const loadSongs = async () => {
-      const data = await fetchSongs()
-      setSongs(data)
-    }
-    loadSongs();
-  }, [])
+function SongList({ songList }) {
+  if (!songList.length) return <p>No results found.</p>
 
   return (
-    <div>
-      <h2>Song List</h2>
-      {songs.length === 0 ? (
-        <p>No songs found.</p>
-      ) : (
-        <ul>
-          {songs.map((song) => (
-            <li key={song._id}>
-              <strong>{song.title}</strong> by {song.artist}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <ul>
+      {songList.map((song, index) => (
+        <li key={index}>
+          <img src={song.cover} alt={song.title} width={50} height={50} style={{ marginRight: '10px' }} />
+          <strong>{song.title}</strong> by {song.artist}
+        </li>
+      ))}
+    </ul>
   )
 }
 

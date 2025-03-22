@@ -1,37 +1,34 @@
-import { NavLink, Link } from 'react-router-dom'
+import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import './Nav.css'
 
-function Nav({ user, handleUserLogout }) {
+function Nav() {
+  const navigate = useNavigate()
+  const isAuthenticated = !!localStorage.getItem('token')
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
+
   return (
-    <nav className='Navbar'>
-      <div className="h1-logo">
-        <h1>
-          <Link to="/">Home</Link>
-        </h1>
-      </div>
-      <div className="right-side-nav">
-        <ul>
-          {!user && (
-            <>
-              <li>
-                <NavLink to="/register">Register</NavLink>
-              </li>
-              <li>
-                <NavLink to="/login">Sign In</NavLink>
-              </li>
-            </>
-          )}
-          {user && (
-            <>
-              <li>
-                <NavLink to="/profile">Update Profile</NavLink>
-              </li>
-              <li>
-                <NavLink to="/" onClick={handleUserLogout}>Log Out</NavLink>
-              </li>
-            </>
-          )}
-        </ul>
+    <nav className="navbar">
+      <Link to="/" className="nav-logo">🎵 Music App</Link>
+      <div className="nav-links">
+        {isAuthenticated ? (
+          <>
+            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/song">Add Song</Link>
+            <Link to="/music">Search</Link>
+            <Link to="/album">Albums</Link>
+            <button onClick={handleLogout} className="nav-button">Logout</button>
+          </>
+        ) : (
+          <>
+            <Link to="/register">Register</Link>
+            <Link to="/login">Login</Link>
+          </>
+        )}
       </div>
     </nav>
   )

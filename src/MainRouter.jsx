@@ -1,45 +1,34 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
-import Nav from './components/Nav/Nav'
-import LogIn from './components/Login/Login'
-import PrivateRoute from './components/PrivateRoute/PrivateRoute'
-import Profile from './components/Profile/Profile'
-import AddEditSong from './components/AddEditSong/AddEditSong'
-import Dashboard from './components/Dashboard/Dashboard'
-import Register from './components/Register/Register'
-import Home from './components/Home/Home'
-import MusicPlayer from './components/MusicPlayer/MusicPlayer'
+import Nav from './components/Nav'
+import Login from './components/Login'
+import Register from './components/Register'
+import PrivateRoute from './components/PrivateRoute'
+import Profile from './components/Profile'
+import AddEditSong from './components/AddEditSong'
+import Dashboard from './components/Dashboard'
+import MusicPlayer from './components/MusicPlayer'
+import AlbumSearch from './components/AlbumSearch'
 import SongsPage from './Pages/SongsPage'
-import AlbumSearch from './components/Album/AlbumSearch'
+import Home from './components/Home'
 
-
-
-// Main Router for the Music App
 function MainRouter({ user, handleUserLogin, handleUserLogout }) {
   return (
     <Router>
       <Nav user={user} handleUserLogout={handleUserLogout} />
       <Routes>
-        <Route path='/register' element={<Register />} />
-        <Route path='/music' element={
-          <PrivateRoute>
-            <MusicPlayer/>
-          </PrivateRoute>
+        <Route path="/" element={<Login handleUserLogin={handleUserLogin} />} />
+        <Route path="/login" element={
+          user ? <Navigate to="/dashboard" /> : <Login handleUserLogin={handleUserLogin} />
         } />
-        <Route path='/' element={<LogIn handleUserLogin={handleUserLogin} />} />
-        <Route path='/login' element={
-          user ? <Navigate to="/music" /> :
-            <LogIn handleUserLogin={handleUserLogin} />
-        } />
-        <Route path='/home' element={<Home />} />
-        <Route path='/profile' element={
-          <PrivateRoute>
-            <Profile userID={user?.id} />
-          </PrivateRoute>
-        } />
-        <Route path='/dashboard' element={<Dashboard />} />
-        <Route path="/album-search" element={<AlbumSearch />} />
-        <Route path='/song/:id?' element={<AddEditSong />} />
-        <Route path='/songs' element={<SongsPage />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/song/:id?" element={<PrivateRoute><AddEditSong /></PrivateRoute>} />
+        <Route path="/music" element={<PrivateRoute><MusicPlayer /></PrivateRoute>} />
+        <Route path="/album-search" element={<PrivateRoute><AlbumSearch /></PrivateRoute>} />
+        <Route path="/profile" element={<PrivateRoute><Profile userID={user?.id} /></PrivateRoute>} />
+        <Route path="/songs" element={<PrivateRoute><SongsPage /></PrivateRoute>} />
+        <Route path="/home" element={<Home />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   )

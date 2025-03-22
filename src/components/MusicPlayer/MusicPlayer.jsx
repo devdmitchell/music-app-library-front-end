@@ -1,7 +1,7 @@
-import axios from 'axios'
 import React, { useState } from 'react'
+import axios from 'axios'
 import SongList from './SongList'
-import "./MusicPlayer.css" 
+import './MusicPlayer.css'
 
 function MusicPlayer() {
   const [textInput, setTextInput] = useState('')
@@ -10,13 +10,12 @@ function MusicPlayer() {
   const handleOnSearch = async (e) => {
     e.preventDefault()
     try {
-      console.log('Hello')
       const query = textInput.trim()
       const response = await axios.get(`http://localhost:3000/api/search?query=${encodeURIComponent(query)}`)
       setSongList(response.data)
       setTextInput('')
     } catch (error) {
-      console.error("Error searching for songs:", error)
+      console.error('Error searching for songs:', error)
     }
   }
 

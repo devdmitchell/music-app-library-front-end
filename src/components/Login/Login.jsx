@@ -1,53 +1,52 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
-import { toast } from "react-toastify"
-import "./Login.css"
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import './Login.css'
 
+const Login = () => {
+  const [formData, setFormData] = useState({ username: '', password: '' })
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
 
-function Login() {
-  const [credentials, setCredentials] = useState({ username: "", password: "" })   
-  const [error, setError] = useState("")
-  const navigate = useNavigate()             //this hook is for navigating to different routes after logging in successfully
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
-  //handle the login form submission
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setError('')
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/login", credentials)    // POST request to the backend login
-      localStorage.setItem("token", response.data.token)      //stores auth token that was received in local storage
-      toast.success('User Logged In.')
-      navigate("/dashboard")            //takes user to dashboard after logging in successfully
-    } catch (error) {
-      setError(error.message)
+      const response = await axios.post('http://localhost:3000/api/auth/login', formData)
+      localStorage.setItem('token', response.data.token)
+      navigate('/dashboard')
+    } catch (err) {
+      setError(err.response?.data?.message || 'Login failed')
     }
   }
 
   return (
     <div className="login-container">
-      <div className="login-box">
-        <h2 className="login-header">Login</h2>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Login</h2>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Login</button>
         {error && <p className="error-message">{error}</p>}
-        <form onSubmit={handleLogin}>
-          <input
-            type="text"
-            placeholder="Username"
-            className="input-field"
-            onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="input-field"
-            autoComplete="off"
-            onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-          />
-          <button className="login-button">Login</button>
-        </form>
-        <p className="register-link">
-          Don't have an account? <a href="/register">Register</a>
-        </p>
-      </div>
+      </form>
     </div>
   )
 }

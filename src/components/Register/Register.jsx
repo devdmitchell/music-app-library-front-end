@@ -1,149 +1,55 @@
-import { useState } from "react"
-import "./Register.css"
-import { isAlphanumeric, isEmail } from "validator"
-import axios from "../../utils/Axios"
-import { Slide, toast } from "react-toastify"
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import './Register.css'
 
-function Register() {
-  // State for form inputs
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+const Register = () => {
+  const [formData, setFormData] = useState({ username: '', password: '' })
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
+  const navigate = useNavigate()
 
-  // State for errors
-  const [usernameError, setUsernameError] = useState("")
-  const [emailError, setEmailError] = useState("")
-  const [passwordError, setPasswordError] = useState("")
-  const [passwordConfirmError, setPasswordConfirmError] = useState("")
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
-  const handleOnSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-
-    // Validation checks
-    if (!isAlphanumeric(username)) {
-      setUsernameError("Username must be alphanumeric.")
-    } else {
-      setUsernameError("")
-    }
-
-    if (!isEmail(email)) {
-      setEmailError("Email must be valid.")
-    } else {
-      setEmailError("")
-    }
-
-    if (password !== confirmPassword) {
-      setPasswordConfirmError("Passwords must match.")
-    } else {
-      setPasswordConfirmError("")
-    }
-
-    // Only proceed if no errors
-    if (
-      usernameError.length === 0 &&
-      emailError.length === 0 &&
-      passwordConfirmError.length === 0
-    ) {
-      try {
-        const response = await axios.post("/auth/register", {
-          username,
-          email,
-          password,
-        })
-
-        if (response.data) {
-          setUsername("")
-          setEmail("")
-          setPassword("")
-          setConfirmPassword("")
-          toast.success("User Registered Successfully!", {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: "dark",
-            transition: Slide,
-          })
-        }
-      } catch (error) {
-        toast.error(error.response?.data?.error || "Registration Failed", {
-          position: "top-center",
-          autoClose: 2000,
-        })
-      }
+    setError('')
+    setSuccess('')
+    try {
+      await axios.post('http://localhost:3000/api/auth/register', formData)
+      setSuccess('Registration successful! You can now login.')
+      setTimeout(() => navigate('/login'), 1500)
+    } catch (err) {
+      setError(err.response?.data?.message || 'Registration failed')
     }
   }
 
   return (
-    <div className="container">
-      <div className="form-text">Register</div>
-      <div className="form-div">
-        <form className="form" onSubmit={handleOnSubmit}>
-          <div className="form-group-block">
-            <div className="block-container">
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <div className="errorMessage">{usernameError}</div>
-            </div>
-          </div>
-
-          <div className="form-group-block">
-            <div className="block-container">
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                id="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <div className="errorMessage">{emailError}</div>
-            </div>
-          </div>
-
-          <div className="form-group-block">
-            <div className="block-container">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                placeholder="Password"
-                autoComplete="off"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div className="form-group-block">
-            <div className="block-container">
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                placeholder="Confirm Password"
-                 autoComplete="off"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              <div className="errorMessage">{passwordConfirmError}</div>
-            </div>
-          </div>
-
-          <div className="button-container">
-            <button type="submit">Register</button>
-          </div>
-        </form>
-      </div>
+    <div className="register-container">
+      <form className="register-form" onSubmit={handleSubmit}>
+        <h2>Register</h2>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Register</button>
+        {error && <p className="error-message">{error}</p>}
+        {success && <p className="success-message">{success}</p>}
+      </form>
     </div>
   )
 }
