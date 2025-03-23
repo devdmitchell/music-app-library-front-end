@@ -17,15 +17,15 @@ const useSongs = (searchQuery = '') => {   //Declares a custom hook named useSon
     } catch (err) { //catches any errors and returns a response
       setError(err)
     } finally {
-      setLoading(false)     // Whether it succeeds or fails, stop showing the loading spinner/message.
+      setLoading(false)    // Whether it succeeds or fails, stop showing the loading spinner/message.
     }
   }
 
-  useEffect(() => {
-    fetchSongs()
-  }, [searchQuery])
+  useEffect(() => {     //hook runs when the component using useSongs mounts or when searchQuery changes.
+    fetchSongs()   //Calls fetchSongs() to load new data.
+  }, [searchQuery])   //The dependency array [searchQuery] ensures the effect re-runs on query changes.
 
-  return { songs, loading, error, fetchSongs }
+  return { songs, loading, error, fetchSongs } //hook returns an object 
 }
 
 export default useSongs
