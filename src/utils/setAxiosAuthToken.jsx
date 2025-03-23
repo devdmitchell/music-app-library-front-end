@@ -15,3 +15,5 @@ export default setAxiosAuthToken
 
 
 // this configures Axios to automatically send a JWT token with all http requests, this is used for authenticating protected backend routes
+
+// this is useful because you only have to call setAxiosAuthToken once, after that all requests automatically included the token. So you don't need to pass it manually everytime.

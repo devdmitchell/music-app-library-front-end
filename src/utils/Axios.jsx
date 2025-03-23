@@ -7,3 +7,5 @@ const Axios = axios.create({
 })
 
 export default Axios
+
+// this creates a custom Axios instance. This is useful because I can reuse it across my app instead of configuring Axios manually every time.
