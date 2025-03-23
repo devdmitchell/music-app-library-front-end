@@ -4,12 +4,12 @@ import { useAuth } from '../../context/AuthContext'
 import './Nav.css'
 
 function Nav() {
-  const { user, logout } = useAuth() // This will work only if wrapped by AuthProvider
-  const navigate = useNavigate()
+  const { user, logout } = useAuth() // This will work only if wrapped by AuthProvider Pulls the current authenticated user and logout function from the AuthContext using the useAuth hook.
+  const navigate = useNavigate()   //Initializes the navigate function so you can redirect users (e.g., after logout).
 
   const handleLogout = () => {
-    logout()
-    navigate('/login')
+    logout()        //Clears user session/token from AuthContext.
+    navigate('/login')     //After logging out, redirect the user to the login page.
   }
 
   return (
@@ -37,3 +37,14 @@ function Nav() {
 }
 
 export default Nav
+
+
+//Renders a <nav> HTML element styled with the Navbar class.
+//Logo that links to the homepage (/). Styled with nav-logo.
+//Wraps all the nav links in a div with nav-links class.
+//Checks if a user is logged in (truthy). - line 19
+//Displays full nav menu for authenticated users.
+//Clicking “Logout” calls handleLogout, logging the user out and redirecting.
+
+//else line 28
+//If no user is logged in, show only links to Register and Login pages.
