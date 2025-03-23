@@ -1,6 +1,6 @@
 import React from 'react'
 import './SongsPage.css'
-import 
+import useSongs from '../hooks/useSongs'
 
 const SongsPage = () => {
   const { songs, loading, error } = useSongs()

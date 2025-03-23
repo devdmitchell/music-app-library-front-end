@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Axios from '../api/Axios'
+import Axios from '../../api/Axios'
 import SongList from './SongList'
 import { toast } from 'react-toastify'
 import './MusicPlayer.css'

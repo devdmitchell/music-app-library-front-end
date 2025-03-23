@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { searchAlbum } from '../api/lastFmApi'
+import { searchAlbum } from '../../api/lastFmApi'
 import { toast } from 'react-toastify'
 import './AlbumSearch.css'
 

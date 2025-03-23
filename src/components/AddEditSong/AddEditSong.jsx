@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import Axios from '../api/Axios'
+import Axios from '../../api/Axios'
 import { toast } from 'react-toastify'
 import './AddEditSong.css'
 
