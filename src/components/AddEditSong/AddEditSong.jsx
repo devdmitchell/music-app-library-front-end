@@ -1,25 +1,26 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import axios from 'axios'
-import './AddEditSong.css'
+import Axios from '../api/Axios'
 import { toast } from 'react-toastify'
+import './AddEditSong.css'
 
 function AddEditSong() {
   const [song, setSong] = useState({ title: '', artist: '' })
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const { id } = useParams()
 
   useEffect(() => {
     if (id) {
       const fetchSong = async () => {
+        setLoading(true)
         try {
-          const token = localStorage.getItem('token')
-          const response = await axios.get(`http://localhost:3000/api/songs/${id}`, {
-            headers: { Authorization: 'Bearer ' + token },
-          })
-          setSong(response.data)
+          const { data } = await Axios.get(`/songs/${id}`)
+          setSong(data)
         } catch (error) {
-          console.error('Error fetching song:', error)
+          toast.error('Error fetching song details.')
+        } finally {
+          setLoading(false)
         }
       }
       fetchSong()
@@ -29,22 +30,24 @@ function AddEditSong() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const method = song._id ? 'put' : 'post'
-      const url = song._id
-        ? `http://localhost:3000/api/songs/update-song-by-id/${song._id}`
-        : 'http://localhost:3000/api/songs/add-song'
-
-      const token = localStorage.getItem('token')
-      await axios[method](url, song, {
-        headers: { Authorization: 'Bearer ' + token },
-      })
-      toast.success('Song saved successfully.')
+      if (song._id) {
+        await Axios.put(`/songs/update-song-by-id/${song._id}`, song)
+        toast.success('Song updated successfully.')
+      } else {
+        await Axios.post('/songs/add-song', song)
+        toast.success('Song added successfully.')
+      }
       navigate('/dashboard')
     } catch (error) {
-      console.error(error)
       toast.error('There was an error saving the song.')
     }
   }
+
+  const handleChange = (e) => {
+    setSong(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  if (loading) return <p>Loading song details...</p>
 
   return (
     <div className="song-container">
@@ -53,17 +56,21 @@ function AddEditSong() {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
+            name="title"
             placeholder="Title"
             className="input-field"
-            value={song.title || ''}
-            onChange={(e) => setSong({ ...song, title: e.target.value })}
+            value={song.title}
+            onChange={handleChange}
+            required
           />
           <input
             type="text"
+            name="artist"
             placeholder="Artist"
             className="input-field"
-            value={song.artist || ''}
-            onChange={(e) => setSong({ ...song, artist: e.target.value })}
+            value={song.artist}
+            onChange={handleChange}
+            required
           />
           <button type="submit" className="save-button">
             Save
@@ -75,4 +82,3 @@ function AddEditSong() {
 }
 
 export default AddEditSong
-

@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import MainRouter from './src/MainRouter'
-import Nav from './src/components/Nav'
+import MainRouter from './MainRouter'
 
 function App() {
+  const [user, setUser] = useState(null)
+
+  const handleUserLogin = (userData) => setUser(userData)
+  const handleUserLogout = () => setUser(null)
+
   return (
     <BrowserRouter>
-      <Nav />
-      <MainRouter />
+      <MainRouter
+        user={user}
+        handleUserLogin={handleUserLogin}
+        handleUserLogout={handleUserLogout}
+      />
     </BrowserRouter>
   )
 }

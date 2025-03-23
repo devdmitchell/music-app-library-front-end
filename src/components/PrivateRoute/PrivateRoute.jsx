@@ -1,10 +1,9 @@
-import { Navigate } from "react-router-dom"
-import { checkIfUserIsAuth } from "../../utils/checkIfUserIsAuth"
+import React from 'react'
+import { Navigate, Outlet } from 'react-router-dom'
 
-function PrivateRoute({ children }) {               //protect routes & ensure only auth users have access
-  const isAuthenticated = checkIfUserIsAuth()
 
-  return isAuthenticated ? children : <Navigate to="/login" />            //if auth reder children components, otherwise go back to login page
+const PrivateRoute = ({ isAuthenticated }) => {
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
 
 export default PrivateRoute

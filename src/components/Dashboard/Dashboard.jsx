@@ -1,44 +1,24 @@
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
-import { searchAlbum } from "../../api/lastFmApi" // Last.fm fetch function
-import "./Dashboard.css"
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import useSongs from '../../hooks/useSongs'
+import { searchAlbum } from '../../components/Album/AlbumSearch'
+import Axios from '../../api/Axios'
+import { toast } from 'react-toastify'
+import './Dashboard.css'
 
 function Dashboard() {
-  const [songs, setSongs] = useState([])
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState('')
   const [lastFmResults, setLastFmResults] = useState([])
+  const { songs, loading, error, fetchSongs } = useSongs()
   const navigate = useNavigate()
-
-  const fetchSongs = async (query = "") => {
-    try {
-      const token = localStorage.getItem("token")
-      let url = "http://localhost:3000/api/songs/get-all-songs"
-      if (query) {
-        url += `?search=${query}`
-      }
-      const response = await axios.get(url, {
-        headers: { Authorization: "Bearer " + token },
-      })
-      setSongs(response.data)
-    } catch (err) {
-      console.error("Error fetching songs:", err)
-    }
-  }
-
-  useEffect(() => {
-    fetchSongs()
-  }, [])
 
   const handleDelete = async (id) => {
     try {
-      const token = localStorage.getItem("token")
-      await axios.delete(`http://localhost:3000/api/songs/delete-song-by-id/${id}`, {
-        headers: { Authorization: "Bearer " + token },
-      })
-      setSongs(songs.filter(song => song._id !== id))
-    } catch (error) {
-      console.error("Error deleting song:", error)
+      await Axios.delete(`/songs/delete-song-by-id/${id}`)
+      toast.success('Song deleted successfully.')
+      fetchSongs()
+    } catch (err) {
+      toast.error('Error deleting song.')
     }
   }
 
@@ -48,13 +28,16 @@ function Dashboard() {
     setLastFmResults(results)
   }
 
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error loading songs.</p>
+
   return (
     <div className="dashboard-container">
       <h1 className="dashboard-header">🎧 Music Dashboard</h1>
 
       <section className="playlist-section">
-        <h2> My Playlist</h2>
-        <button className="add-song-button" onClick={() => navigate("/song")}>
+        <h2>My Playlist</h2>
+        <button className="add-song-button" onClick={() => navigate('/song')}>
           + Add New Song
         </button>
         {songs.length === 0 ? (
@@ -64,8 +47,10 @@ function Dashboard() {
             {songs.map((song) => (
               <li key={song._id} className="song-item">
                 <span>{song.title} - {song.artist}</span>
-                <button className="edit-button" onClick={() => navigate(`/song/${song._id}`)}>Edit</button>
-                <button className="delete-button" onClick={() => handleDelete(song._id)}>Delete</button>
+                <div>
+                  <button className="edit-button" onClick={() => navigate(`/song/${song._id}`)}>Edit</button>
+                  <button className="delete-button" onClick={() => handleDelete(song._id)}>Delete</button>
+                </div>
               </li>
             ))}
           </ul>
@@ -73,7 +58,7 @@ function Dashboard() {
       </section>
 
       <section className="lastfm-section">
-        <h2> Search Music (Last.fm)</h2>
+        <h2>Search Music (Last.fm)</h2>
         <form onSubmit={handleLastFmSearch} className="search-form">
           <input
             type="text"
