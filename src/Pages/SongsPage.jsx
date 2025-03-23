@@ -1,29 +1,38 @@
-import React from 'react'
-import './SongsPage.css'
-import useSongs from '../hooks/useSongs'
+import React, { useEffect, useState } from 'react'
+import { fetchSongs } from '../api/SongsApi'
+
 
 const SongsPage = () => {
-  const { songs, loading, error } = useSongs()
+  const [songs, setSongs] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    const loadSongs = async () => {
+      try {
+        const data = await fetchSongs()
+        setSongs(data)
+      } catch (error) {
+        setError(error.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadSongs()
+  }, [])
 
   if (loading) return <p>Loading songs...</p>
-  if (error) return <p>Error: {error.message}</p>
+  if (error) return <p>Error: {error}</p>
 
   return (
-    <div className="songs-page">
-      <h1>Song List</h1>
-      {songs.length === 0 ? (
-        <p>No songs available.</p>
-      ) : (
-        <ul className="songs-list">
-          {songs.map(song => (
-            <li key={song._id} className="song-item">
-              <h2>{song.title}</h2>
-              <p><strong>Artist:</strong> {song.artist}</p>
-              <p><strong>Album:</strong> {song.album || 'Unknown Album'}</p>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div>
+      <h1>Songs</h1>
+      <ul>
+        {songs.map(song => (
+          <li key={song._id}>{song.title} by {song.artist}</li>
+        ))}
+      </ul>
     </div>
   )
 }

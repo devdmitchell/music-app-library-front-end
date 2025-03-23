@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Axios from '../../api/Axios'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 import { toast } from 'react-toastify'
 import './Profile.css'
 

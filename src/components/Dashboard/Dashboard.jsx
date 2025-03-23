@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useSongs from '../../hooks/useSongs'
-import { searchAlbum } from '../../components/Album/AlbumSearch'
+import { searchAlbum } from '../../api/lastFmApi'
 import Axios from '../../api/Axios'
 import { toast } from 'react-toastify'
 import './Dashboard.css'

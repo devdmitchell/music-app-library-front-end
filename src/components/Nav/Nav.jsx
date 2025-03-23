@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext'
 import './Nav.css'
 
 function Nav() {
-  const { user, logout } = useAuth()
+  const { user, logout } = useAuth() // This will work only if wrapped by AuthProvider
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -23,7 +23,7 @@ function Nav() {
             <Link to="/music">Search</Link>
             <Link to="/album-search">Albums</Link>
             <Link to="/profile">Profile</Link>
-            <button onClick={handleLogout} className="nav-button">Logout</button>
+            <button onClick={handleLogout}>Logout</button>
           </>
         ) : (
           <>

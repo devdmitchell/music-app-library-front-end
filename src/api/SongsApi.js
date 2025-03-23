@@ -1,6 +1,5 @@
 const API_URL = 'http://localhost:3000/api/songs/get-all-songs'
 
-
 export const fetchSongs = async () => {
   try {
     const token = localStorage.getItem('token')
