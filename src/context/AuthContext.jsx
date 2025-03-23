@@ -30,7 +30,11 @@ export const AuthProvider = ({ children }) => {
       const { data } = await Axios.post('/auth/login', formData)
       localStorage.setItem('token', data.token)
       setAxiosAuthToken(data.token)
-      setUser(data.user)
+  
+      // Fetch the authenticated user after login
+      const res = await Axios.get('/auth/me')
+      setUser(res.data.user)
+  
       toast.success('Logged in successfully')
       return true
     } catch (error) {

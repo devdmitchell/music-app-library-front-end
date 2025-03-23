@@ -19,3 +19,17 @@ export const searchAlbum = async (albumName) => {
     return []
   }
 }
+
+
+export const searchTrack = async (trackName) => {
+  try {
+    const response = await fetch(`${BASE_URL}?method=track.search&track=${encodeURIComponent(trackName)}&api_key=${API_KEY}&format=json`)
+    if (!response.ok) throw new Error('Failed to fetch track data')
+
+    const data = await response.json()
+    return data.results.trackmatches.track
+  } catch (error) {
+    console.error('Error fetching track data:', error)
+    return []
+  }
+}

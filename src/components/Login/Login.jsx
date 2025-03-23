@@ -5,18 +5,22 @@ import './Login.css'
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' })
-  const { login } = useAuth()
+  const [error, setError] = useState('')
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const handleChange = (e) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError('')
     const success = await login(formData)
     if (success) {
-      navigate('/dashboard')
+      navigate('/dashboard')  // ← THIS TRIGGERS REDIRECT
+    } else {
+      setError('Invalid username or password')
     }
   }
 
@@ -41,6 +45,7 @@ const Login = () => {
           required
         />
         <button type="submit">Login</button>
+        {error && <p className="error-message">{error}</p>}
       </form>
     </div>
   )
