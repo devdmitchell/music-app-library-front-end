@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
-import Nav from './components/Nav'
+import Nav from './src/components/Nav'
 import Login from './components/Login'
 import Register from './components/Register'
 import PrivateRoute from './components/PrivateRoute'
@@ -8,7 +8,6 @@ import AddEditSong from './components/AddEditSong'
 import Dashboard from './components/Dashboard'
 import MusicPlayer from './components/MusicPlayer'
 import AlbumSearch from './components/AlbumSearch'
-import SongsPage from './Pages/SongsPage'
 import Home from './components/Home'
 
 function MainRouter({ user, handleUserLogin, handleUserLogout }) {    //function that receives 3 props  
