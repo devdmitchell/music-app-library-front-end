@@ -1,0 +1,42 @@
+
+:root {
+  --primary-color: #4299e1;
+  --secondary-color: #48bb78;
+  --accent-color: #ff6bcb;
+  --background-color: #f7fafc;
+  --card-bg: #ffffff;
+  --text-color: #1e1e2f;
+  --border-color: #e2e8f0;
+  --error-color: #f56565;
+  --font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+button {
+  border: none;
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
