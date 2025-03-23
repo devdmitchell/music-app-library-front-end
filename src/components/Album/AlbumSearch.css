@@ -1,0 +1,61 @@
+.album-search-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .album-search-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+  }
+  
+  .album-search-container input[type="text"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .album-search-container button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #3498db;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .album-search-container button:hover {
+    background-color: #2980b9;
+  }
+  
+  .album-results {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+  }
+  
+  .album-results li {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .album-results a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  
+  .album-results a:hover {
+    text-decoration: underline;
+  }

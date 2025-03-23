@@ -14,13 +14,15 @@ import Home from './components/Home/Home'
 import { useAuth } from './context/AuthContext' // useAuth pulls in current auth state from context
 import './App.css'
 
+
+
 function MainRouter() { // main routing component
-  const { user, logout } = useAuth() // pull in user and logout directly from AuthContext
-  const isAuthenticated = Boolean(user) // check if the user is logged in (truthy)
+  const { user, logout } = useAuth() // pull in user and logout directly from AuthContext using the useAuth() hook , user will be null if user isnt logged in, logout allows any component using this router to log the user out
+  const isAuthenticated = Boolean(user) // check if the user is logged in (truthy), coverts the user into a simple boolean: if user exists, isAuthenticated will be true. if user is null, it will be false
 
   return (
-    <>
-      <Nav user={user} handleUserLogout={logout} /> {/* renders my nav component at the top of all pages */}
+  <>        { /*a React fragment, used to wrap multiple elements without adding extra nodes to the DOM.*/}
+      <Nav user={user} handleUserLogout={logout} /> {/* renders my nav component at the top of all pages, Two props are being passed: user: so the nav can display "Login/Register" or "Dashboard/Logout" conditionally. handleUserLogout: allows the nav to log the user out when the logout button is clicked.  */}
       <Routes>
         <Route
           path="/"
