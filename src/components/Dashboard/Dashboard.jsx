@@ -7,27 +7,31 @@ import { toast } from 'react-toastify'
 import './Dashboard.css'
 
 function Dashboard() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [lastFmResults, setLastFmResults] = useState([])
-  const { songs, loading, error, fetchSongs } = useSongs()
-  const navigate = useNavigate()
+  const [searchTerm, setSearchTerm] = useState('')   //Initializes state to hold the user's search input for Last.fm.
+  const [lastFmResults, setLastFmResults] = useState([])   //Stores the results returned from the Last.fm album search.
+  const { songs, loading, error, fetchSongs } = useSongs()  //Custom hook that provides: list of user's saved songs, loading status, error status,  function to refetch songs from backend
+  const navigate = useNavigate()   //Hook from react-router-dom used to programmatically navigate to other pages.
 
-  const handleDelete = async (id) => {
+  //Function that deletes a song by ID when called.
+  const handleDelete = async (id) => {  
     try {
-      await Axios.delete(`/songs/delete-song-by-id/${id}`)
-      toast.success('Song deleted successfully.')
-      fetchSongs()
+      await Axios.delete(`/songs/delete-song-by-id/${id}`)    ////Makes a DELETE request to backend API to delete the song.
+      toast.success('Song deleted successfully.')     //Shows success toast notification.
+      fetchSongs()      //Refreshes the song list after deletion.
     } catch (err) {
-      toast.error('Error deleting song.')
+      toast.error('Error deleting song.')      //Catches and shows error toast if something fails.
     }
   }
 
+  // Last.fm Album Search Handler
   const handleLastFmSearch = async (e) => {
-    e.preventDefault()
+    e.preventDefault()    //Prevents page reload on form submit.
     const results = await searchAlbum(searchTerm)
     setLastFmResults(results)
-  }
+  }    //Calls searchAlbum function with the search term and updates the results.
 
+
+  //Displays fallback content if songs are still loading or if there was an error.
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error loading songs.</p>
 
@@ -89,3 +93,16 @@ function Dashboard() {
 }
 
 export default Dashboard
+
+
+//Button to navigate to the Add/Edit Song form.
+//Checks if there are songs to display. If not, it says "No songs found".
+//Displays the song title and artist.
+//Each song has edit and delete buttons. Clicking edit takes you to /song/:id route to edit that specific song.
+
+//Last.fm Search Section
+//Renders a search input form to allow album search through Last.fm API.
+//Text input is controlled by searchTerm, updated as the user types. On submit, it calls handleLastFmSearch.
+
+// Last.fm Results List
+//If results exist, it renders them as a list.  Each result shows album name and artist. f an album has cover art, it displays the album image as well.
