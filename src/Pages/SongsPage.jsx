@@ -29,10 +29,10 @@ const SongsPage = () => {
   // This renders the actual content
   return (
     <div>
-      <h1>Songs</h1>   {/*heading */}
+      <h1>Songs</h1>  
       <ul>
         {songs.map(song => (
-          <li key={song._id}>{song.title} by {song.artist}</li>      {/*A list of each song with its title and artist using .map() over the songs array. */}
+          <li key={song._id}>{song.title} by {song.artist}</li>    
         ))}
       </ul>
     </div>
@@ -40,3 +40,5 @@ const SongsPage = () => {
 }
 
 export default SongsPage
+{/*heading */}
+{/*A list of each song with its title and artist using .map() over the songs array. */}
