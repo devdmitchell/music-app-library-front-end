@@ -46,7 +46,7 @@ function Profile() {
     }
   }   //Shows a toast notification based on the result.
 
-  if (loading) return <p>Loading profile...</p>      //Renders a loading message while data is being fetched.
+  if (loading) return <p>Loading profile...</p>      //Renders a loading message while data is being fetched
 
   return (
     <div className='update-container'>
